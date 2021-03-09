@@ -1,0 +1,37 @@
+version: '3'
+services:
+  db:
+    image: mongo:latest
+    command: mongod --port 27019
+    environment: 
+      MONGO_INITDB_DATABASE: lms-api-db
+      MONGO_INITDB_ROOT_USERNAME: lms-root
+      MONGO_INITDB_ROOT_PASSWORD: xxx
+    ports:
+      - "27019:27019"
+    volumes:
+      - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+      - mongo-volume:/data/db
+    container_name: lms-db
+  
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment: 
+      ROCKET_PORT: 8080
+      ROCKET_ADDRESS: 0.0.0.0
+      MONGO_ADDR: lms-db
+      MONGO_PORT: 27019
+      MONGO_USER: lmsApi
+      MONGO_PASSWORD: xxx
+      DB_NAME: lms-api-db
+    ports: 
+      - "8080:8080"
+    volumes:
+      - .:/usr/src/app
+    command: cargo watch -x run
+    container_name: lms-api
+
+volumes:
+  mongo-volume:

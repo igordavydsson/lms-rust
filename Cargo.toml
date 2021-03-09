@@ -1,0 +1,24 @@
+[package]
+name = "lms_rust"
+version = "1.0.0"
+authors = ["Igor Davydychev <igor.davydychev@gmail.com>"]
+description = "License Management Service for Yousician"
+repository = ""
+edition = "2018"
+
+[dependencies]
+mongodb = "0.3.11"
+dotenv = "0.13.0"
+r2d2 = "0.8.9"
+r2d2-mongodb = "*"
+rocket = "0.4.6"
+rocket_codegen = "0.4.6"
+serde = { version = "1.0.123", features = ["derive"] }
+serde_derive = "1.0.123"
+serde_json = "1.0.61"
+# lms_rust = { path = "/usr/src/app" }
+
+[dependencies.rocket_contrib]
+default-features = false
+features = ["json"]
+version = "0.4.6"
